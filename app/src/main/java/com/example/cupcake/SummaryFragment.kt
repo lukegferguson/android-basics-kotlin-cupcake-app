@@ -37,7 +37,7 @@ class SummaryFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentSummaryBinding? = null
 
-    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
+    //Initialize value for the shared ViewModel
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -53,8 +53,8 @@ class SummaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
-            lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
+            lifecycleOwner = viewLifecycleOwner
             summaryFragment = this@SummaryFragment
         }
     }
@@ -63,39 +63,36 @@ class SummaryFragment : Fragment() {
      * Submit the order by sharing out the order details to another app via an implicit intent.
      */
     fun sendOrder() {
-        // Construct the order summary text with information from the view model
+
+        //format information to be passed to the implicit intent
         val numberOfCupcakes = sharedViewModel.quantity.value ?: 0
         val orderSummary = getString(
             R.string.order_details,
+            //use plural to correctly handle number of cupcakes
             resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
             sharedViewModel.flavor.value.toString(),
             sharedViewModel.date.value.toString(),
-            sharedViewModel.price.value.toString()
+            sharedViewModel.price.value.toString(),
+            sharedViewModel.userName.value.toString(),
+            sharedViewModel.userPhone.value.toString()
         )
 
-        // Create an ACTION_SEND implicit intent with order details in the intent extras
+        //create implicit intent to pass the order information
         val intent = Intent(Intent.ACTION_SEND)
             .setType("text/plain")
             .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.new_cupcake_order))
             .putExtra(Intent.EXTRA_TEXT, orderSummary)
 
-        // Check if there's an app that can handle this intent before launching it
+        //Verify that there is an app able to handle the implicit intent
         if (activity?.packageManager?.resolveActivity(intent, 0) != null) {
-            // Start a new activity with the given intent (this may open the share dialog on a
-            // device if multiple apps can handle this intent)
             startActivity(intent)
         }
+
     }
 
-    /**
-     * Cancel the order and start over.
-     */
     fun cancelOrder() {
-        // Reset order in view model
         sharedViewModel.resetOrder()
-
-        // Navigate back to the [StartFragment] to start over
-        findNavController().navigate(R.id.action_summaryFragment_to_startFragment)
+        findNavController().navigate(R.id.action_summaryFragment_to_startFragment2)
     }
 
     /**

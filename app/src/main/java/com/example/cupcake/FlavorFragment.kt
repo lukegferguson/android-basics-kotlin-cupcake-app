@@ -35,7 +35,7 @@ class FlavorFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentFlavorBinding? = null
 
-    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
+    //Initialize value for the shared ViewModel
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -51,13 +51,8 @@ class FlavorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
-            // Specify the fragment as the lifecycle owner
-            lifecycleOwner = viewLifecycleOwner
-
-            // Assign the view model to a property in the binding class
             viewModel = sharedViewModel
-
-            // Assign the fragment
+            lifecycleOwner = viewLifecycleOwner
             flavorFragment = this@FlavorFragment
         }
     }
@@ -69,16 +64,11 @@ class FlavorFragment : Fragment() {
         findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
-    /**
-     * Cancel the order and start over.
-     */
     fun cancelOrder() {
-        // Reset order in view model
         sharedViewModel.resetOrder()
-
-        // Navigate back to the [StartFragment] to start over
         findNavController().navigate(R.id.action_flavorFragment_to_startFragment)
     }
+
 
     /**
      * This fragment lifecycle method is called when the view hierarchy associated with the fragment
