@@ -1,6 +1,8 @@
 package com.example.cupcake
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,7 @@ class UserDetailsFragment: Fragment() {
     private var binding: FragmentUserdetailsBinding? = null
 
     private val sharedViewModel: OrderViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +40,7 @@ class UserDetailsFragment: Fragment() {
             lifecycleOwner = viewLifecycleOwner
             userDetailsFragment = this@UserDetailsFragment
         }
+
     }
 
     fun goToNextScreen(){
@@ -44,6 +48,7 @@ class UserDetailsFragment: Fragment() {
     }
 
     fun cancelOrder(){
+        sharedViewModel.resetOrder()
         findNavController().navigate(R.id.action_userDetailsFragment_to_startFragment)
     }
 

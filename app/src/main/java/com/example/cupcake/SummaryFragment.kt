@@ -72,7 +72,9 @@ class SummaryFragment : Fragment() {
             resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
             sharedViewModel.flavor.value.toString(),
             sharedViewModel.date.value.toString(),
-            sharedViewModel.price.value.toString()
+            sharedViewModel.price.value.toString(),
+            sharedViewModel.userName.value.toString(),
+            sharedViewModel.userPhone.value.toString()
         )
 
         //create implicit intent to pass the order information

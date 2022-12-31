@@ -29,6 +29,12 @@ class OrderViewModel: ViewModel() {
 
     val dateOptions: List<String> = getPickupOptions()
 
+    private val _userName = MutableLiveData<String>()
+    val userName = _userName
+
+    private val _userPhone = MutableLiveData<String>()
+    val userPhone = _userPhone
+
     init {
         resetOrder()
     }
@@ -46,6 +52,14 @@ class OrderViewModel: ViewModel() {
     fun setDate(pickupDate: String){
         _date.value = pickupDate
         updatePrice()
+    }
+
+    fun setUserName(name: String){
+        _userName.value = name
+    }
+
+    fun setUserPhone(phone: String){
+        _userPhone.value = phone
     }
 
     private fun updatePrice() {
@@ -81,6 +95,8 @@ class OrderViewModel: ViewModel() {
         _flavor.value = ""
         _date.value = dateOptions[0]
         _price.value = 0.0
+        _userName.value = ""
+        _userPhone.value = ""
     }
 
 }

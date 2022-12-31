@@ -39,9 +39,12 @@
     <string name="total_price">Total %s</string>
     <string name="new_cupcake_order">New Cupcake Order</string>
     <string name="order_details">Quantity: %1$s \n Flavor: %2$s \nPickup date: %3$s \n
-        Total: %4$s \n\n Thank you!</string>
-    <string name="enter_name">Enter full name</string>
-    <string name="enter_phone">Enter phone number</string>
+        Total: %4$s \n Name: %5$s \n Phone: %6$s \n\n Thank you!</string>
+    <string name="enter_name">Name</string>
+    <string name="enter_phone">Phone number</string>
+    <string name="not_provided">Not Provided</string>
+    <string name="user_name">Name</string>
+    <string name="user_phone">Phone</string>
     <plurals name="cupcakes">
         <item quantity="one">%d cupcake</item>
         <item quantity="other">%d cupcakes</item>
