@@ -25,7 +25,6 @@
     <string name="red_velvet">Red Velvet</string>
     <string name="salted_caramel">Salted Caramel</string>
     <string name="coffee">Coffee</string>
-    <string name="special_flavor">Special Flavor</string>
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="choose_pickup_date">Choose Pickup Date</string>
@@ -42,7 +41,6 @@
         Total: %4$s \n Name: %5$s \n Phone: %6$s \n\n Thank you!</string>
     <string name="enter_name">Name</string>
     <string name="enter_phone">Phone number</string>
-    <string name="not_provided">Not Provided</string>
     <string name="user_name">Name</string>
     <string name="user_phone">Phone</string>
     <plurals name="cupcakes">
