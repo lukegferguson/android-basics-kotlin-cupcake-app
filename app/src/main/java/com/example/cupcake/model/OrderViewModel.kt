@@ -58,16 +58,25 @@ class OrderViewModel: ViewModel() {
         updatePrice()
     }
 
-    //Set user name to "none" if user does not enter a value
+
     fun setUserName(name: String){
-        if (name.isNullOrEmpty()) _userName.value = "None"
-        else _userName.value = name
+        _userName.value = name
+    }
+
+
+    fun setUserPhone(phone: String){
+        _userPhone.value = phone
     }
 
     //Handle null values for phone, else format phone number
-    fun setUserPhone(phone: String){
-        if (phone.isNullOrEmpty()) _userPhone.value = "None"
-        else _userPhone.value = PhoneNumberUtils.formatNumber(phone, "US")
+    fun formatPhone(){
+        if (_userPhone.value.isNullOrEmpty()) _userPhone.value = "None"
+        else _userPhone.value = PhoneNumberUtils.formatNumber(_userPhone.value, "US")
+    }
+
+    //Set user name to "none" if user does not enter a value
+    fun formatName(){
+        if (_userName.value.isNullOrEmpty()) _userName.value = "None"
     }
 
     private fun updatePrice() {

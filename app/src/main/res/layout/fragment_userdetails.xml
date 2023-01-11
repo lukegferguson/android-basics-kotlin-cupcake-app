@@ -36,7 +36,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name_input_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setUserName(text.toString())}"
+                    android:text="@{viewModel.userName}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +55,10 @@
                     android:id="@+id/phone_input_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setUserPhone(text.toString()) }"
+                    android:text="@{viewModel.userPhone}"
+                    android:digits="0123456789+"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
