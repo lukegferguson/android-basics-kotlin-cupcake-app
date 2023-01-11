@@ -1,8 +1,6 @@
 package com.example.cupcake
 
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +43,14 @@ class UserDetailsFragment: Fragment() {
 
     fun goToNextScreen(){
         findNavController().navigate(R.id.action_userDetailsFragment_to_summaryFragment)
+
+        //Set user phone and name based on user entry
+        sharedViewModel.setUserPhone(binding?.phoneInputEditText?.text.toString())
+        sharedViewModel.setUserName(binding?.nameInputEditText?.text.toString())
+
+        //Set text fields to display name/formatted number, or "None" if null
+        binding!!.phoneInputEditText.setText(sharedViewModel.userPhone.value)
+        binding!!.nameInputEditText.setText(sharedViewModel.userName.value)
     }
 
     fun cancelOrder(){

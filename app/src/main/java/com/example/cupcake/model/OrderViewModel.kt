@@ -1,5 +1,6 @@
 package com.example.cupcake.model
 
+import android.telephony.PhoneNumberUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -37,6 +38,7 @@ class OrderViewModel: ViewModel() {
     private val _userPhone = MutableLiveData<String>()
     val userPhone = _userPhone
 
+
     init {
         resetOrder()
     }
@@ -56,12 +58,16 @@ class OrderViewModel: ViewModel() {
         updatePrice()
     }
 
+    //Set user name to "none" if user does not enter a value
     fun setUserName(name: String){
-        _userName.value = name
+        if (name.isNullOrEmpty()) _userName.value = "None"
+        else _userName.value = name
     }
 
+    //Handle null values for phone, else format phone number
     fun setUserPhone(phone: String){
-        _userPhone.value = phone
+        if (phone.isNullOrEmpty()) _userPhone.value = "None"
+        else _userPhone.value = PhoneNumberUtils.formatNumber(phone, "US")
     }
 
     private fun updatePrice() {
