@@ -71,6 +71,7 @@ class OrderViewModel: ViewModel() {
     //Handle null values for phone, else format phone number
     fun formatPhone(){
         if (_userPhone.value.isNullOrEmpty()) _userPhone.value = "None"
+        else if (_userPhone.value == "None") _userPhone.value = "None"
         else _userPhone.value = PhoneNumberUtils.formatNumber(_userPhone.value, "US")
     }
 
