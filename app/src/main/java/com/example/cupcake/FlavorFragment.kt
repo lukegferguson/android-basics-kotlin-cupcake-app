@@ -15,10 +15,13 @@
  */
 package com.example.cupcake
 
+import android.icu.number.Notation.simple
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -38,6 +41,13 @@ class FlavorFragment : Fragment() {
     //Initialize value for the shared ViewModel
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
+    //Initialize spinners
+    private lateinit var vanillaSpinner: Spinner
+    private lateinit var chocolateSpinner: Spinner
+    private lateinit var redVelvetSpinner: Spinner
+    private lateinit var saltedCaramelSpinner: Spinner
+    private lateinit var coffeeSpinner: Spinner
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +57,8 @@ class FlavorFragment : Fragment() {
         return fragmentBinding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,7 +67,46 @@ class FlavorFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             flavorFragment = this@FlavorFragment
         }
+
+        //Set number to be displayed in  flavor spinners based on quantity selected
+        val flavorArray =  when (sharedViewModel.quantity.value) {
+            1 -> R.array.one_array
+            6 -> R.array.six_array
+            else -> R.array.twelve_array
+        }
+
+        //Create an ArrayAdapter using the string array selected by flavorArray and a custom spinner layout
+        fun spinnerAdapter(spinner: Spinner) {
+            ArrayAdapter.createFromResource(
+                requireContext(), flavorArray, android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(R.layout.spinner_layout)
+                //apply the adapter to the spinner
+                spinner.adapter = adapter
+
+            }
+        }
+
+        //Associate spinners with their view and create ArrayAdapters
+        vanillaSpinner = view.findViewById(R.id.vanilla_spinner)
+        spinnerAdapter(vanillaSpinner)
+
+        chocolateSpinner = view.findViewById(R.id.chocolate_spinner)
+        spinnerAdapter(chocolateSpinner)
+
+        redVelvetSpinner = view.findViewById(R.id.red_velvet_spinner)
+        spinnerAdapter(redVelvetSpinner)
+
+        saltedCaramelSpinner = view.findViewById(R.id.salted_caramel_spinner)
+        spinnerAdapter(saltedCaramelSpinner)
+
+        coffeeSpinner = view.findViewById(R.id.coffee_spinner)
+        spinnerAdapter(coffeeSpinner)
+
     }
+
+
 
     /**
      * Navigate to the next screen to choose pickup date.

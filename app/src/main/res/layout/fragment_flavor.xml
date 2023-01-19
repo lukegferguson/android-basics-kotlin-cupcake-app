@@ -38,54 +38,116 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin">
 
-            <RadioGroup
-                android:id="@+id/flavor_options"
+            <!--Vanilla Spinner -->
+<!--TODO: Fix app crash when user goes back and selects smaller order amount. IE, 4 selected then goes back to order one cupcake -->
+            <Spinner
+                android:id="@+id/vanilla_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/side_margin"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/vanilla, position)}"
+                android:selectedItemPosition="@{viewModel.flavor.get(@string/vanilla)}"/>
 
-                <RadioButton
-                    android:id="@+id/vanilla"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/vanilla"
-                    android:checked="@{viewModel.flavor.equals(@string/vanilla)}"
-                    android:onClick="@{() -> viewModel.setFlavor(@string/vanilla)}"/>
+            <TextView
+                android:id="@+id/vanilla"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintStart_toEndOf="@id/vanilla_spinner"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Vanilla"
+                android:text="@string/vanilla"/>
 
-                <RadioButton
-                    android:id="@+id/chocolate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/chocolate"
-                    android:checked="@{viewModel.flavor.equals(@string/chocolate)}"
-                    android:onClick="@{() -> viewModel.setFlavor(@string/chocolate)}"/>
+            <!--Chocolate Spinner-->
+            <Spinner
+                android:id="@+id/chocolate_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vanilla_spinner"
+                android:layout_marginTop="@dimen/side_margin"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/chocolate, position)}"
+                android:selectedItemPosition="@{viewModel.flavor.get(@string/chocolate)}"/>
 
-                <RadioButton
-                    android:id="@+id/red_velvet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/red_velvet"
-                    android:checked="@{viewModel.flavor.equals(@string/red_velvet)}"
-                    android:onClick="@{() -> viewModel.setFlavor(@string/red_velvet)}"/>
+            <TextView
+                android:id="@+id/chocolate"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintStart_toEndOf="@id/chocolate_spinner"
+                app:layout_constraintTop_toBottomOf="@id/vanilla"
+                tools:text="Chocolate"
+                android:text="@string/chocolate"/>
 
-                <RadioButton
-                    android:id="@+id/salted_caramel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/salted_caramel"
-                    android:checked="@{viewModel.flavor.equals(@string/salted_caramel)}"
-                    android:onClick="@{() -> viewModel.setFlavor(@string/salted_caramel)}"/>
+            <!--Red Velvet Spinner-->
+            <Spinner
+                android:id="@+id/red_velvet_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chocolate_spinner"
+                android:layout_marginTop="@dimen/side_margin"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/red_velvet, position)}"
+                android:selectedItemPosition="@{viewModel.flavor.get(@string/red_velvet)}"/>
 
-                <RadioButton
-                    android:id="@+id/coffee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/coffee"
-                    android:checked="@{viewModel.flavor.equals(@string/coffee)}"
-                    android:onClick="@{() -> viewModel.setFlavor(@string/coffee)}"/>
-            </RadioGroup>
+            <TextView
+                android:id="@+id/red_velvet"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintStart_toEndOf="@id/red_velvet_spinner"
+                app:layout_constraintTop_toBottomOf="@id/chocolate"
+                tools:text="Red Velvet"
+                android:text="@string/red_velvet"/>
+
+            <!--Salted Caramel Spinner-->
+            <Spinner
+                android:id="@+id/salted_caramel_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/red_velvet_spinner"
+                android:layout_marginTop="@dimen/side_margin"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/salted_caramel, position)}"
+                android:selectedItemPosition="@{viewModel.flavor.get(@string/salted_caramel)}"/>
+
+            <TextView
+                android:id="@+id/salted_caramel"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintStart_toEndOf="@id/salted_caramel_spinner"
+                app:layout_constraintTop_toBottomOf="@id/red_velvet"
+                tools:text="Salted Caramel"
+                android:text="@string/salted_caramel"/>
+
+            <!--Coffee Spinner-->
+            <Spinner
+                android:id="@+id/coffee_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/salted_caramel_spinner"
+                android:layout_marginTop="@dimen/side_margin"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/coffee, position)}"
+                android:selectedItemPosition="@{viewModel.flavor.get(@string/coffee)}"/>
+
+            <TextView
+                android:id="@+id/coffee"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintStart_toEndOf="@id/coffee_spinner"
+                app:layout_constraintTop_toBottomOf="@id/salted_caramel"
+                tools:text="Coffee"
+                android:text="@string/coffee"/>
 
             <View
                 android:id="@+id/divider"
@@ -95,7 +157,7 @@
                 android:layout_marginTop="@dimen/side_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/flavor_options" />
+                app:layout_constraintTop_toBottomOf="@id/coffee" />
 
             <TextView
                 android:id="@+id/subtotal"

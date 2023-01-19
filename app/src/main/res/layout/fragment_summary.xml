@@ -87,8 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/order_summary_margin"
                     tools:text="Chocolate"
-                    android:text="@{viewModel.flavor}"/>
-
+                    android:text="Chocolate"/>
+<!--TODO: pull flavors from map, set plurals for title-->
                 <View
                     android:id="@+id/divider2"
                     style="@style/Widget.Cupcake.Divider"

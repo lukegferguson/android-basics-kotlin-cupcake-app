@@ -1,10 +1,12 @@
 package com.example.cupcake.model
 
 import android.telephony.PhoneNumberUtils
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.cupcake.R
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,12 +19,11 @@ class OrderViewModel: ViewModel() {
     private val _quantity = MutableLiveData<Int>()
     val quantity: LiveData<Int> = _quantity
 
-    private val _flavor = MutableLiveData<String>()
-    val flavor: LiveData<String> = _flavor
+    private val _flavor = MutableLiveData<MutableMap<String, Int>>()
+    val flavor: LiveData<MutableMap<String, Int>> = _flavor
 
     private val _date = MutableLiveData<String>()
     val date: LiveData<String> = _date
-
 
     private val _price = MutableLiveData<Double>()
     val price: LiveData<String> = Transformations.map(_price) {
@@ -49,8 +50,11 @@ class OrderViewModel: ViewModel() {
         updatePrice()
     }
 
-    fun setFlavor(desiredFlavor: String){
-        _flavor.value = desiredFlavor
+    fun setFlavor(flavor: String, flavorQuantity: Int){
+        if (flavorQuantity != 0) _flavor.value!![flavor] = flavorQuantity
+        //TODO Need to be allow user to put value back to zero and/or if value is zero remove from map
+
+        Log.d("flavorpls", "Flavor: $flavor.value., Quantity from map: ${_flavor.value?.get("Vanilla")}")
     }
 
     fun setDate(pickupDate: String){
@@ -91,9 +95,6 @@ class OrderViewModel: ViewModel() {
         _price.value = calculatedPrice
     }
 
-    fun hasNoFlavorSet(): Boolean{
-        return _flavor.value.isNullOrEmpty()
-    }
 
     private fun getPickupOptions(): List<String>{
         val options = mutableListOf<String>()
@@ -111,11 +112,18 @@ class OrderViewModel: ViewModel() {
 
     fun resetOrder() {
         _quantity.value = 0
-        _flavor.value = ""
         _date.value = dateOptions[0]
         _price.value = 0.0
         _userName.value = ""
         _userPhone.value = ""
+        _flavor.value = emptyMap<String, Int>().toMutableMap()
+
+/* Potential alternate method to reset _flavor
+        if (_flavor.value.isNullOrEmpty()) {
+            for (flavor in _flavor.value!!.keys) {
+                _flavor.value!!.remove(flavor)
+            }
+        }*/
     }
 
 }
