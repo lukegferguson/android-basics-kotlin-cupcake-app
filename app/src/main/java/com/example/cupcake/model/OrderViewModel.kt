@@ -1,8 +1,6 @@
 package com.example.cupcake.model
 
-import android.service.autofill.Validators.or
 import android.telephony.PhoneNumberUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -17,7 +15,7 @@ private const val  PRICE_FOR_SAME_DAY_PICKUP = 3.00
 class OrderViewModel: ViewModel() {
 
     //Total quantity of cupcakes ordered, all flavors combined
-    private val _quantity = MutableLiveData<Int>(0)
+    private val _quantity = MutableLiveData(0)
     val quantity: LiveData<Int> = _quantity
 
     //Map including flavor and quantity of each flavor
@@ -74,10 +72,12 @@ class OrderViewModel: ViewModel() {
 
     //Returns a list of cupcake flavors ordered and the quantity of each
     fun orderedFlavors(): List<String>{
-        var orderedFlavors = mutableListOf<String>()
+        val orderedFlavors = mutableListOf<String>()
 
             for (flavors in flavor.value!!) {
-                if (flavors.value > 0) orderedFlavors.add(flavors.toString())
+                if (flavors.value > 0) {
+                    orderedFlavors.add(flavors.toString().replace("="," - "))
+                }
             }
         return orderedFlavors
     }

@@ -15,7 +15,6 @@
  */
 package com.example.cupcake
 
-import android.icu.number.Notation.simple
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,16 +42,12 @@ class FlavorFragment : Fragment() {
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     //Initialize spinners
-    private lateinit var vanillaSpinner: Spinner
-    private lateinit var chocolateSpinner: Spinner
-    private lateinit var redVelvetSpinner: Spinner
-    private lateinit var saltedCaramelSpinner: Spinner
-    private lateinit var coffeeSpinner: Spinner
+    private lateinit var spinners: List<Spinner>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentFlavorBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
@@ -70,7 +65,6 @@ class FlavorFragment : Fragment() {
         }
 
         //Create an ArrayAdapter with a custom spinner layout
-        //TODO move this adapter to its own file in the adapters package
         fun spinnerAdapter(spinner: Spinner) {
             ArrayAdapter.createFromResource(
                 requireContext(), R.array.twelve_array, android.R.layout.simple_spinner_item
@@ -83,21 +77,15 @@ class FlavorFragment : Fragment() {
             }
         }
 
-        //Associate spinners with their view and create ArrayAdapters
-        vanillaSpinner = view.findViewById(R.id.vanilla_spinner)
-        spinnerAdapter(vanillaSpinner)
+        //Associate spinners with their view then create ArrayAdapters
+        spinners = listOf(view.findViewById(R.id.vanilla_spinner),
+            view.findViewById(R.id.chocolate_spinner),
+            view.findViewById(R.id.red_velvet_spinner),
+            view.findViewById(R.id.red_velvet_spinner),
+            view.findViewById(R.id.salted_caramel_spinner),
+            view.findViewById(R.id.coffee_spinner))
 
-        chocolateSpinner = view.findViewById(R.id.chocolate_spinner)
-        spinnerAdapter(chocolateSpinner)
-
-        redVelvetSpinner = view.findViewById(R.id.red_velvet_spinner)
-        spinnerAdapter(redVelvetSpinner)
-
-        saltedCaramelSpinner = view.findViewById(R.id.salted_caramel_spinner)
-        spinnerAdapter(saltedCaramelSpinner)
-
-        coffeeSpinner = view.findViewById(R.id.coffee_spinner)
-        spinnerAdapter(coffeeSpinner)
+        for (spinner in spinners) spinnerAdapter(spinner)
 
     }
 

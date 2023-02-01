@@ -10,7 +10,7 @@ import com.example.cupcake.R
 class FlavorAdapter(private val dataset: List<String>):
     RecyclerView.Adapter<FlavorAdapter.ItemViewHolder>() {
 
-    class ItemViewHolder(private val view: View): RecyclerView.ViewHolder(view){
+    class ItemViewHolder(view: View): RecyclerView.ViewHolder(view){
         val textView: TextView = view.findViewById(R.id.flavor_item)
     }
 

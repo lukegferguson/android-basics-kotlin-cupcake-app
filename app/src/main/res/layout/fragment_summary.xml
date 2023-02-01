@@ -79,8 +79,8 @@
                     style="@style/Widget.Cupcake.TextView.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flavor_summary" />
-                <!--TODO Plurals for Flavor or Flavors-->
+                    android:text="@{@plurals/flavors(viewModel.orderedFlavors().size)}"
+                    tools:text="Flavors"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/flavor_list"

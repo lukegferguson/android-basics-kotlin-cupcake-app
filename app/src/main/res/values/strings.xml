@@ -28,15 +28,13 @@
     <string name="order_summary">Order Summary</string>
     <string name="send">Send Order to Another App</string>
     <string name="quantity">Total Quantity</string>
-    <string name="flavor">Flavor</string>
-    <string name="flavor_summary">Flavor Summary</string>
     <string name="pickup_date">Pickup date</string>
     <string name="subtotal_price">Subtotal %s</string>
     <string name="total_price">Total %s</string>
     <string name="new_cupcake_order">New Cupcake Order</string>
     <string name="order_cupcakes">Order Cupcakes</string>
-    <string name="order_details">Quantity: %1$s \n Flavor: %2$s \nPickup date: %3$s \n
-        Total: %4$s \n Name: %5$s \n Phone: %6$s \n\n Thank you!</string>
+    <string name="order_details">Quantity: %1$s \n %2$s: %3$s \nPickup date: %4$s \n
+        Total: %5$s \n Name: %6$s \n Phone: %7$s \n\n Thank you!</string>
     <string name="enter_name">Name</string>
     <string name="enter_phone">Phone number</string>
     <string name="user_name">Name</string>

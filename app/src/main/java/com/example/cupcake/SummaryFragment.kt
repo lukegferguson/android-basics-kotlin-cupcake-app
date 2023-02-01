@@ -45,7 +45,7 @@ class SummaryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentSummaryBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
@@ -72,17 +72,18 @@ class SummaryFragment : Fragment() {
     /**
      * Submit the order by sharing out the order details to another app via an implicit intent.
      */
-    //TODO Update to only send ordered cupcakes (done, but it's ugly...)
-    //TODO flavor/flavors plural in email formatting
     fun sendOrder() {
-
         //format information to be passed to the implicit intent
         val numberOfCupcakes = sharedViewModel.quantity.value ?: 0
+        val numberOfFlavors = sharedViewModel.orderedFlavors().size
+        //Format list of flavors so that there is a line break between each
+        val formattedFlavors = sharedViewModel.orderedFlavors().joinToString(separator = "\n  ")
         val orderSummary = getString(
             R.string.order_details,
-            //use plural to correctly handle number of cupcakes
+            //use plural to correctly handle cupcake/s and flavor/s
             resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
-            sharedViewModel.orderedFlavors(),
+            resources.getQuantityString(R.plurals.flavors, numberOfFlavors),
+            formattedFlavors,
             sharedViewModel.date.value.toString(),
             sharedViewModel.price.value.toString(),
             sharedViewModel.userName.value.toString(),

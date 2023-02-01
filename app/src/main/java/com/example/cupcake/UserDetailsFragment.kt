@@ -1,8 +1,6 @@
 package com.example.cupcake
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +24,7 @@ class UserDetailsFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentUserdetailsBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
