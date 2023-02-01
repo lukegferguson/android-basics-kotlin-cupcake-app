@@ -2,6 +2,7 @@ package com.example.cupcake
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,7 @@ class UserDetailsFragment: Fragment() {
 
     fun cancelOrder(){
         sharedViewModel.resetOrder()
-        findNavController().navigate(R.id.action_userDetailsFragment_to_startFragment)
+        findNavController().navigate(R.id.action_userDetailsFragment_to_flavorFragment)
     }
 
     override fun onDestroyView() {

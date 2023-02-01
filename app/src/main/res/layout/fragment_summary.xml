@@ -16,6 +16,7 @@
 -->
 <!-- Layout for order summary -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".SummaryFragment">
 
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/order_summary_margin"
                     tools:text="6 cupcakes"
-                    android:text="@{viewModel.quantity.toString()}"/>
+                    android:text="@{@plurals/cupcakes(viewModel.quantity, viewModel.quantity)}"/>
 
                 <View
                     android:id="@+id/divider1"
@@ -78,17 +79,16 @@
                     style="@style/Widget.Cupcake.TextView.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flavor" />
+                    android:text="@string/flavor_summary" />
+                <!--TODO Plurals for Flavor or Flavors-->
 
-                <TextView
-                    android:id="@+id/flavor"
-                    style="@style/Widget.Cupcake.TextView.OrderSummary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/order_summary_margin"
-                    tools:text="Chocolate"
-                    android:text="Chocolate"/>
-<!--TODO: pull flavors from map, set plurals for title-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/flavor_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="LinearLayoutManager"
+                    />
+
                 <View
                     android:id="@+id/divider2"
                     style="@style/Widget.Cupcake.Divider"

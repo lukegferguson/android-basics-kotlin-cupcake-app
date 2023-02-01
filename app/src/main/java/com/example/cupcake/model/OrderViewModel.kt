@@ -1,12 +1,12 @@
 package com.example.cupcake.model
 
+import android.service.autofill.Validators.or
 import android.telephony.PhoneNumberUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.cupcake.R
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,28 +16,36 @@ private const val  PRICE_FOR_SAME_DAY_PICKUP = 3.00
 
 class OrderViewModel: ViewModel() {
 
-    private val _quantity = MutableLiveData<Int>()
+    //Total quantity of cupcakes ordered, all flavors combined
+    private val _quantity = MutableLiveData<Int>(0)
     val quantity: LiveData<Int> = _quantity
 
+    //Map including flavor and quantity of each flavor
     private val _flavor = MutableLiveData<MutableMap<String, Int>>()
     val flavor: LiveData<MutableMap<String, Int>> = _flavor
 
+    //Date cupcakes will be picked up
     private val _date = MutableLiveData<String>()
     val date: LiveData<String> = _date
 
+    //Total price of cupcake order
     private val _price = MutableLiveData<Double>()
     val price: LiveData<String> = Transformations.map(_price) {
 
         NumberFormat.getCurrencyInstance().format(it)
     }
 
+    //List of dates that cupcakes can be picked up
     val dateOptions: List<String> = getPickupOptions()
 
+    //Name of person ordering cupcakes
     private val _userName = MutableLiveData<String>()
     val userName = _userName
 
+    //Phone number of user ordering cupcakes
     private val _userPhone = MutableLiveData<String>()
     val userPhone = _userPhone
+
 
 
     init {
@@ -45,16 +53,33 @@ class OrderViewModel: ViewModel() {
     }
 
 
-    fun setQuantity(numberCupcakes: Int){
-        _quantity.value = numberCupcakes
-        updatePrice()
+    //Set total quantity of cupcakes to be ordered
+    private fun setQuantity(){
+        var tempQuantity: Int = 0
+
+            for ((flavors, q) in flavor.value!!){
+                tempQuantity += flavor.value!![flavors]!!
+            }
+            _quantity.value = tempQuantity
+            updatePrice()
     }
 
-    fun setFlavor(flavor: String, flavorQuantity: Int){
-        if (flavorQuantity != 0) _flavor.value!![flavor] = flavorQuantity
-        //TODO Need to be allow user to put value back to zero and/or if value is zero remove from map
+    fun setFlavorAndQuantity(flavor: String, flavorQuantity: Int){
 
-        Log.d("flavorpls", "Flavor: $flavor.value., Quantity from map: ${_flavor.value?.get("Vanilla")}")
+        _flavor.value!![flavor] = flavorQuantity
+
+        setQuantity()
+
+    }
+
+    //Returns a list of cupcake flavors ordered and the quantity of each
+    fun orderedFlavors(): List<String>{
+        var orderedFlavors = mutableListOf<String>()
+
+            for (flavors in flavor.value!!) {
+                if (flavors.value > 0) orderedFlavors.add(flavors.toString())
+            }
+        return orderedFlavors
     }
 
     fun setDate(pickupDate: String){
@@ -62,11 +87,9 @@ class OrderViewModel: ViewModel() {
         updatePrice()
     }
 
-
     fun setUserName(name: String){
         _userName.value = name
     }
-
 
     fun setUserPhone(phone: String){
         _userPhone.value = phone
@@ -96,6 +119,7 @@ class OrderViewModel: ViewModel() {
     }
 
 
+    //Returns a list of 4 dates, starting with today, that cupcakes can be picked up
     private fun getPickupOptions(): List<String>{
         val options = mutableListOf<String>()
         val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
@@ -110,6 +134,7 @@ class OrderViewModel: ViewModel() {
     }
 
 
+    //Blanks out all data fields so user can start a new order
     fun resetOrder() {
         _quantity.value = 0
         _date.value = dateOptions[0]
@@ -118,12 +143,6 @@ class OrderViewModel: ViewModel() {
         _userPhone.value = ""
         _flavor.value = emptyMap<String, Int>().toMutableMap()
 
-/* Potential alternate method to reset _flavor
-        if (_flavor.value.isNullOrEmpty()) {
-            for (flavor in _flavor.value!!.keys) {
-                _flavor.value!!.remove(flavor)
-            }
-        }*/
     }
 
 }

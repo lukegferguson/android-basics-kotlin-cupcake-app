@@ -38,16 +38,38 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/side_margin">
 
+            <ImageView
+                android:id="@+id/image_cupcake"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:importantForAccessibility="no"
+                android:scaleType="center"
+                app:srcCompat="@drawable/cupcake"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/order_cupcakes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/side_margin"
+                android:text="@string/order_cupcakes"
+                android:textAppearance="?attr/textAppearanceHeadline4"
+                android:textColor="@color/material_on_background_emphasis_medium"
+                app:layout_constraintTop_toBottomOf="@id/image_cupcake"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <!--Vanilla Spinner -->
-<!--TODO: Fix app crash when user goes back and selects smaller order amount. IE, 4 selected then goes back to order one cupcake -->
             <Spinner
                 android:id="@+id/vanilla_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/order_cupcakes"
                 android:layout_marginTop="@dimen/side_margin"
-                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/vanilla, position)}"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavorAndQuantity(@string/vanilla, position)}"
                 android:selectedItemPosition="@{viewModel.flavor.get(@string/vanilla)}"/>
 
             <TextView
@@ -57,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_margin"
                 app:layout_constraintStart_toEndOf="@id/vanilla_spinner"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/order_cupcakes"
                 tools:text="Vanilla"
                 android:text="@string/vanilla"/>
 
@@ -69,7 +91,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vanilla_spinner"
                 android:layout_marginTop="@dimen/side_margin"
-                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/chocolate, position)}"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavorAndQuantity(@string/chocolate, position)}"
                 android:selectedItemPosition="@{viewModel.flavor.get(@string/chocolate)}"/>
 
             <TextView
@@ -91,7 +113,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/chocolate_spinner"
                 android:layout_marginTop="@dimen/side_margin"
-                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/red_velvet, position)}"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavorAndQuantity(@string/red_velvet, position)}"
                 android:selectedItemPosition="@{viewModel.flavor.get(@string/red_velvet)}"/>
 
             <TextView
@@ -113,7 +135,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/red_velvet_spinner"
                 android:layout_marginTop="@dimen/side_margin"
-                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/salted_caramel, position)}"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavorAndQuantity(@string/salted_caramel, position)}"
                 android:selectedItemPosition="@{viewModel.flavor.get(@string/salted_caramel)}"/>
 
             <TextView
@@ -135,7 +157,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/salted_caramel_spinner"
                 android:layout_marginTop="@dimen/side_margin"
-                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavor(@string/coffee, position)}"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel.setFlavorAndQuantity(@string/coffee, position)}"
                 android:selectedItemPosition="@{viewModel.flavor.get(@string/coffee)}"/>
 
             <TextView
@@ -180,7 +202,7 @@
                 app:layout_constraintEnd_toStartOf="@id/next_button"
                 app:layout_constraintStart_toStartOf="parent"
                 style="?attr/materialButtonOutlinedStyle"
-                android:onClick="@{() -> flavorFragment.cancelOrder()}"/>
+                android:onClick="@{() -> viewModel.resetOrder()}"/>
 
             <Button
                 android:id="@+id/next_button"

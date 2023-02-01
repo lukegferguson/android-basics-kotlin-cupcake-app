@@ -23,8 +23,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cupcake.databinding.FragmentSummaryBinding
 import com.example.cupcake.model.OrderViewModel
+import com.example.cupcake.adapters.FlavorAdapter
 
 /**
  * [SummaryFragment] contains a summary of the order details with a button to share the order
@@ -57,11 +59,21 @@ class SummaryFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             summaryFragment = this@SummaryFragment
         }
+
+        val orderedFlavors = sharedViewModel.orderedFlavors()
+
+        val recyclerView = getView()?.findViewById<RecyclerView>(R.id.flavor_list)
+
+        recyclerView?.adapter = FlavorAdapter(orderedFlavors)
+        recyclerView?.setHasFixedSize(true)
+
     }
 
     /**
      * Submit the order by sharing out the order details to another app via an implicit intent.
      */
+    //TODO Update to only send ordered cupcakes (done, but it's ugly...)
+    //TODO flavor/flavors plural in email formatting
     fun sendOrder() {
 
         //format information to be passed to the implicit intent
@@ -70,7 +82,7 @@ class SummaryFragment : Fragment() {
             R.string.order_details,
             //use plural to correctly handle number of cupcakes
             resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
-            sharedViewModel.flavor.value.toString(),
+            sharedViewModel.orderedFlavors(),
             sharedViewModel.date.value.toString(),
             sharedViewModel.price.value.toString(),
             sharedViewModel.userName.value.toString(),
@@ -92,7 +104,7 @@ class SummaryFragment : Fragment() {
 
     fun cancelOrder() {
         sharedViewModel.resetOrder()
-        findNavController().navigate(R.id.action_summaryFragment_to_startFragment2)
+        findNavController().navigate(R.id.action_summaryFragment_to_flavorFragment)
     }
 
     /**

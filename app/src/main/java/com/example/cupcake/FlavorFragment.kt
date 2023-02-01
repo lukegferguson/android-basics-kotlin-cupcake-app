@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -29,7 +30,7 @@ import com.example.cupcake.databinding.FragmentFlavorBinding
 import com.example.cupcake.model.OrderViewModel
 
 /**
- * [FlavorFragment] allows a user to choose a cupcake flavor for the order.
+ *This is the first screen of the Cupcake app. [FlavorFragment] allows a user to choose cupcake flavors and quantities for the order.
  */
 class FlavorFragment : Fragment() {
 
@@ -68,17 +69,11 @@ class FlavorFragment : Fragment() {
             flavorFragment = this@FlavorFragment
         }
 
-        //Set number to be displayed in  flavor spinners based on quantity selected
-        val flavorArray =  when (sharedViewModel.quantity.value) {
-            1 -> R.array.one_array
-            6 -> R.array.six_array
-            else -> R.array.twelve_array
-        }
-
-        //Create an ArrayAdapter using the string array selected by flavorArray and a custom spinner layout
+        //Create an ArrayAdapter with a custom spinner layout
+        //TODO move this adapter to its own file in the adapters package
         fun spinnerAdapter(spinner: Spinner) {
             ArrayAdapter.createFromResource(
-                requireContext(), flavorArray, android.R.layout.simple_spinner_item
+                requireContext(), R.array.twelve_array, android.R.layout.simple_spinner_item
             ).also { adapter ->
                 // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(R.layout.spinner_layout)
@@ -109,15 +104,13 @@ class FlavorFragment : Fragment() {
 
 
     /**
-     * Navigate to the next screen to choose pickup date.
+     * Navigate to the next screen to choose pickup date, if quantity is more than zero. Otherwise show toast/error
      */
     fun goToNextScreen() {
-        findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
-    }
+        val toast = Toast.makeText(requireContext(), R.string.quantity_toast, Toast.LENGTH_LONG)
 
-    fun cancelOrder() {
-        sharedViewModel.resetOrder()
-        findNavController().navigate(R.id.action_flavorFragment_to_startFragment)
+        if (sharedViewModel.quantity.value!! <= 0) toast.show()
+        else findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
 
